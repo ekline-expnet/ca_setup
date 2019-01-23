@@ -1,0 +1,18 @@
+CA_ROOT="/data/ca/root"
+DEFAULT_COUNTRY="US"
+DEFAULT_O="Expression Networks"
+DEFAULT_OU="PKI"
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+CA_OPENSSL_CNF=$SCRIPT_DIR/ca_openssl.template.cnf
+INTER_OPENSSL_CNF=$SCRIPT_DIR/intermediate_openssl.template.cnf
+
+#fix below after testing
+#size of ca and intermediate keys - should be 4096
+CA_SIZE=4096
+#set CA_ENCRYPT to "" to not encrypt CA and Intermediate keys
+CA_ENCRYPT="aes256"
+
+#set below to "" to be prompted
+#CA_SUBJ="/C=US/O=$DEFAULT_COUNTRY/O=$DEFAULT_O/OU=$DEFAULT_OU/DC=certs/CN=ca.expr.net"
+#INTER_SUBJ="/C=US/O=$DEFAULT_O/OU=$DEFAULT_OU/DC=certs/CN=inter1.ca.expr.net"
