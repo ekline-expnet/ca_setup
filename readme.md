@@ -48,6 +48,28 @@ The folder structure created is:
 | crl   | certificate revocation lists  |
 | csr   | certificate signing requests  |
 | private   | private keys created |
+
+### create_cert.sh
+
+Create a public / private key pair using the intermediate certificate
+
+```
+Options:
+  -h, --help                  Print this helpful message
+  -d, --days DAYS             Number of days cert is valid
+  -s, --server                Create server cert
+  -u, --User                  Create user cert
+  -b, --basename BASENAME     Basename for cert/key pair to be save in /data/ca/root/intermeidate (required)
+  --no-extension              Add to not add the server or user cert extension
+  --unencrypted               Add to create cert/key pair without a password
+}
+```
+
+The basename is required and is used as the basename of the output file.
+
+Example to create a server cert:
+`./create_cert.sh -s -b db.j.expr.net `
+
 ## CA Setup for MongoDB and Mongo BI Connector
 
 1.  Create Certificate Authority

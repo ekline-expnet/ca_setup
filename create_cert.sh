@@ -14,6 +14,8 @@ Options:
   -s, --server                Create server cert
   -u, --User                  Create user cert
   -b, --basename BASENAME     Basename for cert/key pair to be save in $CA_ROOT/intermeidate (required)
+  --no-extension              Add to not add the server or user cert extension
+  --unencrypted               Add to create cert/key pair without a password
 }
 
 __EOT__
