@@ -51,6 +51,7 @@ show_cert() {
 }
 
 gen_cert() {
+  echo "generating cert with no extensions"
   openssl ca -config $1 -days $4 -notext \
     -md sha256 -in $2 -out $3;
   chmod 444 $3;
@@ -60,6 +61,7 @@ gen_server_cert() {
   if [ $5 = true ]; then
     gen_cert $1 $2 $3 $4 $5
   else
+    echo "generating cert with server extension"
     openssl ca -config $1 -extensions server_cert -days $4 -notext \
       -md sha256 -in $2 -out $3;
     chmod 444 $3;
@@ -70,6 +72,7 @@ gen_user_cert() {
   if [ $5 = true ]; then
     gen_cert $1 $2 $3 $4 $5
   else
+    echo "generating cert with user extension"
     openssl ca -config $1 -extensions usr_cert -days $4 -notext \
       -md sha256 -in $2 -out $3;
     chmod 444 $3;

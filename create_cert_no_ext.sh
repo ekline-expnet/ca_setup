@@ -35,10 +35,10 @@ while [ "$1" != "" ]; do
   case "$1" in
     -h|--help) usage; exit 0;;
     -d|--days) shift; CA_DAYS="$1"; shift;;
-    # -s|--server) CERT_TYPE="server"; shift;;
-    # -u|--user) CERT_TYPE="user"; shift;;
+    -s|--server) CERT_TYPE="server"; shift;;
+    -u|--user) CERT_TYPE="user"; shift;;
     -b|--basename) shift; basename="$1"; shift;;
-    # --no-extension) shift; no_extension=TRUE;;
+    --no-extension) shift; no_extension=TRUE;;
     --unencrypted) shift; skip_encrypt=TRUE;;
     # --subject) shift; subject="$1"; shift;;
     --) shift; break;;
@@ -68,11 +68,19 @@ key=$CA_ROOT"/intermediate/private/"$basename".key.pem"
 
 gen_csr "$cnf" "$key" "$csr";
 
-
-gen_cert $cnf \
-  $CA_ROOT/intermediate/csr/$basename.csr.pem \
-  $CA_ROOT/intermediate/certs/$basename.cert.pem $CA_DAYS;
-
+if [[ $CERT_TYPE == "server" ]]; then
+  gen_server_cert $cnf \
+    $CA_ROOT/intermediate/csr/$basename.csr.pem \
+    $CA_ROOT/intermediate/certs/$basename.cert.pem $CA_DAYS no_extension;
+elif [[ $CERT_TYPE == "user" ]]; then
+  gen_user_cert $cnf \
+    $CA_ROOT/intermediate/csr/$basename.csr.pem \
+    $CA_ROOT/intermediate/certs/$basename.cert.pem $CA_DAYS no_extension;
+else
+  gen_cert $cnf \
+    $CA_ROOT/intermediate/csr/$basename.csr.pem \
+    $CA_ROOT/intermediate/certs/$basename.cert.pem $CA_DAYS;
+fi
 show_cert intermediate/certs/intermediate.cert.pem
 
 openssl verify -CAfile \
